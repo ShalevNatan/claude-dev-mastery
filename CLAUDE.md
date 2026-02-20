@@ -1,19 +1,47 @@
-Act as a Senior Frontend Engineer. We are working on the 'main' branch of this repository, and the goal is to produce production-ready code for our initial push.
+# CLAUDE.md
 
-Project Goal: Build a Modern Productivity Dashboard as a single-page application.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Technical Stack:
-- Vanilla JavaScript (ES6+), HTML5, and CSS3.
-- Use a mobile-first, responsive design with "Glassmorphism" aesthetics (dark mode).
+## Project
 
-Core Features:
-1. Dynamic Header: A large digital clock with a greeting that updates based on the system time.
-2. Task Management: A To-Do list with Add/Delete functionality using localStorage for persistence.
-3. Focus Timer: A 25-minute Pomodoro countdown timer.
+A Modern Productivity Dashboard — a static single-page application with no build step, no npm, and no framework dependencies.
 
-Requirements:
-- Ensure the project structure is clean: index.html, css/style.css, and js/app.js.
-- Write modular, well-commented code.
-- Once the code is written, summarize the changes so I can review them before we commit to the main branch.
+## Running the App
 
-Please initialize the file structure and write the implementation now.
+Open `index.html` directly in a browser, or serve it with any static file server:
+
+```bash
+# Python (available on most systems)
+python -m http.server 8080
+
+# Node.js (if available)
+npx serve .
+```
+
+There is no build, compile, or install step.
+
+## File Structure
+
+```
+index.html        # Entry point — loads CSS and JS
+css/style.css     # All styles (glassmorphism dark theme, mobile-first)
+js/app.js         # All application logic, split into modules via ES6+ patterns
+```
+
+## Architecture
+
+`js/app.js` is organized into three self-contained logical sections, each initialized on `DOMContentLoaded`:
+
+- **Clock/Greeting** — Updates every second via `setInterval`; greeting text is derived from `Date` hours.
+- **Task Manager** — CRUD operations against `localStorage`; renders task list to the DOM on every mutation.
+- **Pomodoro Timer** — 25-minute countdown managed with `setInterval`; start/pause/reset controls update a single display element.
+
+State lives exclusively in `localStorage` (tasks only). There is no shared state object between modules — each section reads from and writes to the DOM and `localStorage` independently.
+
+## Conventions
+
+- Vanilla JS (ES6+): use `const`/`let`, arrow functions, template literals, and `querySelector`.
+- CSS follows a mobile-first approach; breakpoints widen the layout for larger screens.
+- Code must be modular and well-commented. Group related functions with a section comment header.
+- Always summarize changes before committing so they can be reviewed.
+- We work directly on the `main` branch.
